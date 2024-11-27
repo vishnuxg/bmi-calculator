@@ -1,0 +1,75 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMI Calculator</title>
+  <link rel="stylesheet" href="./style.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center mb-4">BMI Calculator</h1>
+    <div class="card shadow-lg p-4">
+      <form id="bmiForm">
+        <div class="mb-3">
+          <label for="weight" class="form-label">Weight (in kg)</label>
+          <input type="number" id="weight" class="form-control" placeholder="Enter your weight" required>
+        </div>
+        <div class="mb-3">
+          <label for="height" class="form-label">Height (in cm)</label>
+          <input type="number" id="height" class="form-control" placeholder="Enter your height" required>
+        </div>
+        <button type="button" class="btn btn-primary w-100" onclick="calculateBMI()">Calculate BMI</button>
+      </form>
+      <div class="mt-4">
+        <h3 id="bmiResult" class="text-center text-success"></h3>
+        <p id="bmiMessage" class="text-center"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function calculateBMI() {
+      // Get the weight and height values
+      const weight = parseFloat(document.getElementById("weight").value);
+      const height = parseFloat(document.getElementById("height").value) / 100; // Convert cm to meters
+      
+      // Validate inputs
+      if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+        alert("Please enter valid values for weight and height.");
+        return;
+      }
+      
+      // Calculate BMI
+      const bmi = (weight / (height * height)).toFixed(2);
+      
+      // Display BMI result
+      const bmiResult = document.getElementById("bmiResult");
+      const bmiMessage = document.getElementById("bmiMessage");
+      
+      bmiResult.textContent =` Your BMI: ${bmi}`;
+      
+      // Determine BMI category
+      if (bmi < 18.5) {
+        bmiMessage.textContent = "You are underweight.";
+        bmiMessage.className = "text-center text-warning";
+      } else if (bmi >= 18.5 && bmi < 24.9) {
+        bmiMessage.textContent = "You have a normal weight.";
+        bmiMessage.className = "text-center text-success";
+      } else if (bmi >= 25 && bmi < 29.9) {
+        bmiMessage.textContent = "You are overweight.";
+        bmiMessage.className = "text-center text-warning";
+      } else {
+        bmiMessage.textContent = "You are obese.";
+        bmiMessage.className = "text-center text-danger";
+      }
+    }
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
